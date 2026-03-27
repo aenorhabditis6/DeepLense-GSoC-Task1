@@ -1,4 +1,4 @@
-# DeepLense GSoC 2026 — Common Test I & Specific Test VII
+# DeepLense GSoC 2026 Application: Common Test I & Specific Test VII
 
 Evaluation test submissions for the **Physics Guided Machine Learning on Real Lensing Images** and **Physics-Informed Diffusion Models for Gravitational Lensing Simulation** projects under [ML4SCI / DeepLense](https://github.com/ML4SCI/DeepLense).
 
