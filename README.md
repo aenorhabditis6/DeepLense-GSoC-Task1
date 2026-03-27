@@ -1,4 +1,4 @@
-# DeepLense GSoC 2026: Common Test I & Specific Test VII
+# DeepLense GSoC 2026 — Common Test I & Specific Test VII
 
 Evaluation test submissions for the **Physics Guided Machine Learning on Real Lensing Images** and **Physics-Informed Diffusion Models for Gravitational Lensing Simulation** projects under [ML4SCI / DeepLense](https://github.com/ML4SCI/DeepLense).
 
@@ -41,13 +41,13 @@ Regularization: dropout (0.3), AdamW with weight decay (1e-4).
 
 Loss drops sharply once the backbone is unfrozen at epoch 6. Train and val accuracy converge to ~96%.
 
-![Training curves — Test I](figures/training_curves_test1.png)
+![Training curves — Test I](figures/training_curves_t1.png)
 
 ### ROC curves
 
 All three classes achieve AUC > 0.99. Subhalo is the hardest class to separate (0.9920), while vortex is easiest (0.9980).
 
-![ROC curves — Test I](figures/roc_test1.png)
+![ROC curves — Test I](figures/roc_t1.png)
 
 ---
 
@@ -75,25 +75,25 @@ The Test I backbone is extended with:
 
 The physics loss (green dashed) drops to near-zero almost immediately, indicating the Poisson constraint is trivially satisfied.
 
-![Training curves — V1](figures/training_curves_test7_v1.png)
+![Training curves — V1](figures/training_curves_t7.png)
 
 #### ROC comparison: Test I vs V1
 
 The improvement is marginal (0.9950 → 0.9953), consistent with the physics branch providing little additional signal.
 
-![ROC comparison](figures/roc_comparison_v1.png)
+![ROC comparison](figures/roc_comparison.png)
 
 #### V1 Convergence map samples
 
 Row 1: input image. Row 2: predicted κ (7×7). Row 3: κ overlaid on image. The maps are near-zero with no visible class-discriminative structure.
 
-![Convergence maps — V1](figures/kappa_overlay_v1.png)
+![Convergence maps — V1](figures/kappa_maps.png)
 
 #### V1 Per-class κ analysis
 
 Mean and standard deviation of κ maps aggregated across the validation set by class. All three classes produce nearly identical near-zero maps, confirming the network finds a trivial solution (κ → 0) that satisfies Poisson without learning meaningful mass structure.
 
-![Per-class kappa — V1](figures/kappa_per_class_v1.png)
+![Per-class kappa — V1](figures/kappa_per_class.png)
 
 ### V2: Spectral Poisson solver (28×28)
 
@@ -109,25 +109,13 @@ Training is stabilized with gradient clipping (max norm 1.0) and a differential 
 
 The physics loss is now non-trivial (stays non-zero), but the val accuracy does not improve over the baseline.
 
-![Training curves — V2](figures/training_curves_v2.png)
-
-#### Three-way ROC comparison
-
-V2 achieves 0.9949 macro AUC — slightly below both V1 and the baseline.
-
-![Three-way ROC](figures/roc_three_way.png)
+![Training curves — V2](figures/v2_training.png)
 
 #### V2 Per-class convergence, potential, and deflection
 
 Row 1: mean κ. Row 2: mean ψ (lensing potential). Row 3: mean |∇ψ| (deflection magnitude). Despite higher resolution and a non-trivial Poisson constraint, per-class statistics remain nearly identical across all three classes.
 
-![Per-class kappa/psi/deflection — V2](figures/kappa_psi_defl_v2.png)
-
-### Confusion matrices
-
-Side-by-side comparison of Test I and Test VII V1 predictions. Both show similar error patterns: subhalo is most commonly confused with no\_sub.
-
-![Confusion matrices](figures/confusion_matrices.png)
+![Per-class kappa/psi/deflection — V2](figures/v2_kappa_psi_defl.png)
 
 ---
 
@@ -145,16 +133,14 @@ This motivates the **LensPINN architecture** ([Ojha et al., NeurIPS ML4PS 2024](
 ├── deeplense_test1_and_7.ipynb       # Main notebook (Tests I + VII)
 ├── README.md
 └── figures/
-    ├── training_curves_test1.png
-    ├── roc_test1.png
-    ├── training_curves_test7_v1.png
-    ├── roc_comparison_v1.png
-    ├── kappa_overlay_v1.png
-    ├── kappa_per_class_v1.png
-    ├── training_curves_v2.png
-    ├── roc_three_way.png
-    ├── kappa_psi_defl_v2.png
-    └── confusion_matrices.png
+    ├── training_curves_t1.png        # Test I training loss and accuracy
+    ├── roc_t1.png                    # Test I per-class ROC curves
+    ├── training_curves_t7.png        # Test VII V1 training curves
+    ├── roc_comparison.png            # Test I vs V1 ROC comparison
+    ├── kappa_maps.png                # V1 convergence map samples
+    ├── kappa_per_class.png           # V1 per-class κ analysis
+    ├── v2_training.png               # V2 training curves
+    └── v2_kappa_psi_defl.png         # V2 per-class κ, ψ, |∇ψ| maps
 ```
 
 ## How to Run
